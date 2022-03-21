@@ -5,7 +5,7 @@ $title = 'vovabob learn PHP';
 ob_start();
 
 // load a "unique" template first
-include  __DIR__ . '/../templates/home.html.php';
+include  __DIR__ . '/../templates/index.html.php';
 
 $output = ob_get_clean();
 
