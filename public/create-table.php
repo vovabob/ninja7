@@ -23,4 +23,4 @@ try {
     $output = 'Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 
-include  __DIR__ . '/../templates/output.html.php';
+include  __DIR__ . '/../templates/layout.html.php';
