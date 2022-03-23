@@ -4,14 +4,14 @@
 try {
   $pdo = new PDO('mysql:host=localhost;dbname=db1;charset=utf8mb4', 'user1', 'qqq');
 
-  $sql = 'SELECT `joketext` FROM `joke`';
+  $sql = 'SELECT `joketext`, `id` FROM joke';
 
-// $result is a PDOStatement object
-  $result = $pdo->query($sql);
-
-  while ($row = $result->fetch()) {
-     $jokes[] = $row['joketext'];
-  }
+  // $result is a PDOStatement object
+  //$result = $pdo->query($sql);
+  
+  // Got rid of the unnecessary $result array and load
+  // a PDOStatement object directly into the $jokes!
+  $jokes = $pdo->query($sql);
 
   $title = 'Joke list';
 
