@@ -2,7 +2,7 @@
 // public/jokes.php
 
 try {
-  $pdo = new PDO('mysql:host=localhost;dbname=db1;charset=utf8mb4', 'user1', 'qqq');
+  include __DIR__ . '/../includes/DbConnect.php';
 
   $sql = 'SELECT `joketext`, `id` FROM joke';
 

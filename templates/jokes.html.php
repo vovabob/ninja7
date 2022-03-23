@@ -1,4 +1,7 @@
 <!-- templates/jokes.html.php -->
+
+<!-- NB: if coming from 'deletejoke.php, the $jokes contains 
+    a PDOStatement object (instead of an array).   -->
 <?php foreach ($jokes as $joke): ?>
 <blockquote>
   <p>

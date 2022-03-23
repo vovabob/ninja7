@@ -3,7 +3,7 @@
 
 if (isset($_POST['joketext'])) {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=db1;charset=utf8mb4', 'user1', 'qqq');
+        include __DIR__ . '/../includes/DbConnect.php';
         
         $sql = 'INSERT INTO `joke` SET `joketext` = :joketext, `jokedate` = CURDATE()';
         $stmt = $pdo->prepare($sql);
