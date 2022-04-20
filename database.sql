@@ -38,7 +38,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (1,'Kevin Yank','thatguy@kevinyank.com',''),(2,'Tom Butler','tom@r.je','');
+INSERT INTO `author` VALUES (1,'Kevin Yank','thatguy@kevinyank.com','pwd1','0666'),(2,'Tom Butler','tom@r.je','pwd2','0444');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
