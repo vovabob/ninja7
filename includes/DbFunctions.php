@@ -19,30 +19,45 @@ function getJoke($pdo, $id) {
   return $stmt->fetch();
 }
 
-function insertJoke($pdo, $joketext, $authorId) {
-  $stmt = $pdo->prepare('INSERT INTO `joke` (`joketext`, `jokedate`, `authorId`)
-      VALUES (:joketext, :jokedate, :authorId)');
+function insertJoke($pdo, $values) {
+    $query = 'INSERT INTO `joke` (';
 
-  $values = [
-    ':joketext' => $joketext, 
-    ':authorId' => $authorId,
-    ':jokedate' => date('Y-m-d')
-  ];
+    foreach ($values as $key => $value) {
+    $query .= '`' . $key . '`,';
+    }
+    $query = rtrim($query, ',');
+    $query .= ') VALUES (' ;
 
-  $stmt->execute($values);
+    foreach ($values as $key => $value) {
+    $query .= ':' . $key . ',';
+    }
+    $query = rtrim($query, ',');
+    $query .= ')';
+
+    $values = processDates($values);
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($values);
 }
 
-function updateJoke($pdo, $jokeId, $joketext, $authorId) {
-  $stmt = $pdo->prepare('UPDATE `joke` SET `authorId` = :authorId, `joketext` = :joketext WHERE `id` = :id');
+function updateJoke($pdo, $values) {
+    $query = ' UPDATE `joke` SET ';
+    $updateFields = [];
 
-  $values = [
-    ':joketext' => $joketext,
-    ':authorId' => $authorId,
-    ':id' => $jokeId
-  ];
+    // V.Z: here we are using only keys
+    foreach ($values as $key => $value) {
+    $updateFields[] = '`' . $key . '` = :' . $key;
+    }
+    $query .= implode(', ', $updateFields);
+    $query .= ' WHERE `id` = :primaryKey';
 
-  $stmt->execute($values);
+    // Set the :primaryKey variable to the same value as 'id'
+    $values['primaryKey'] = $values['id'];
 
+    $values = processDates($values);
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($values);
 }
 
 function deleteJoke($pdo, $id) {
@@ -57,11 +72,21 @@ function deleteJoke($pdo, $id) {
 }
 
 function allJokes($pdo) {
-  $stmt = $pdo->prepare('SELECT `joke`.`id`, `joketext`, `name`, `email` FROM `joke` 
-INNER JOIN `author` ON `authorid` = `author`.`id`');
+  $stmt = $pdo->prepare('SELECT `joke`.`id`, `joketext`, `jokedate`, `name`, `email` 
+FROM `joke` INNER JOIN `author` ON `authorid` = `author`.`id`');
 
   $stmt->execute();
   return $stmt->fetchAll();
 }
+
+function processDates($values) {
+    foreach ($values as $key => $value) {
+        if ($value instanceof DateTime) {
+            $values[$key] = $value->format('Y-m-d H:i:s');
+        }
+    }
+    return $values;
+}
+
 
 // eof

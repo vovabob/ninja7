@@ -7,8 +7,8 @@
 <blockquote>
   <p>
   <?= htmlspecialchars($joke['joketext'], ENT_QUOTES, 'UTF-8') ?>
-  (by <a href="mailto:<?= htmlspecialchars($joke['email'],ENT_QUOTES,'UTF-8'); ?>"><?= htmlspecialchars($joke['name'],ENT_QUOTES,'UTF-8'); ?></a>)
-
+  (by <a href="mailto:<?= htmlspecialchars($joke['email'],ENT_QUOTES,'UTF-8'); ?>"><?= htmlspecialchars($joke['name'],ENT_QUOTES,'UTF-8'); ?></a>
+  on <?= $joke['jokedate']; ?>)
   <a href="editjoke.php?id=<?=$joke['id']?>">Edit</a>
 
   <form action="deletejoke.php" method="post">

@@ -5,8 +5,15 @@ try {
     include __DIR__ . '/../includes/DbConnection.php';
     include __DIR__ . '/../includes/DbFunctions.php';
 
+//    if (isset($_POST['joketext'])) {
+//        updateJoke($pdo, $_POST['jokeid'], $_POST['joketext'], 1);
+
     if (isset($_POST['joketext'])) {
-        updateJoke($pdo, $_POST['jokeid'], $_POST['joketext'], 1);
+        updateJoke($pdo, [
+            'id' => $_POST['jokeid'],
+            'joketext' => $_POST['joketext'],
+            'authorId' => 1
+        ]);
 
         header('location: jokes.php');
     } else {
